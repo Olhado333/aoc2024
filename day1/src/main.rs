@@ -13,9 +13,14 @@ fn main() {
         panic!("Lists are not of equal length.");
     }
 
+    let mut difference_sum = 0;
+
     for i in 0..list_1.len() {
-        println!("At {}: list_1: {}, list_2: {}.", i, list_1[i], list_2[i]);
+        let diff = list_1[i].abs_diff(list_2[i]);
+        difference_sum += diff;
     }
+
+    println!("The sum of the differences between each list item is {difference_sum}");
 }
 
 fn divide_input(puzzle_input: &String) -> (Vec<u32>, Vec<u32>) {
