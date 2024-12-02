@@ -2,7 +2,7 @@ use std::fs;
 
 fn main() {
     let puzzle_input =
-        fs::read_to_string("src/puzzle_input.txt").expect("Failed to read puzzle input.");
+        fs::read_to_string("src/mini_puzzle_input.txt").expect("Failed to read puzzle input.");
 
     let reports = parse_input(&puzzle_input);
 
@@ -13,8 +13,9 @@ fn num_safe_reports(reports: &Vec<Vec<i32>>) -> u32 {
     let mut count = 0;
 
     for report in reports {
-        if find_safety(report) {
+        if is_report_safe(report) {
             count += 1;
+            println!("safe");
         }
     }
 
@@ -29,14 +30,14 @@ fn problem_dampener(mut report: Vec<i32>) -> Vec<i32> {
 
     for _ in 0..(report.len() - 1) {
         if (report[first_pointer] < report[second_pointer]) != increasing {
-            report.remove(second_pointer);
+            report.remove(first_pointer);
             break;
         }
 
         let difference = report[first_pointer].abs_diff(report[second_pointer]);
 
         if (difference < 1) || (difference > 3) {
-            report.remove(second_pointer);
+            report.remove(first_pointer);
             break;
         }
 
@@ -47,8 +48,12 @@ fn problem_dampener(mut report: Vec<i32>) -> Vec<i32> {
     report
 }
 
-fn find_safety(report: &Vec<i32>) -> bool {
-    let mut report = problem_dampener(report.clone());
+fn is_report_safe(report: &Vec<i32>) -> bool {
+    println!("Before removing problematic element:\n{report:?}");
+
+    let report = problem_dampener(report.clone());
+
+    println!("After:\n{report:?}");
 
     if report.len() < 2 {
         return true;
