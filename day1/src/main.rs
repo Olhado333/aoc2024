@@ -1,4 +1,5 @@
 use std::fs;
+use std::collections::HashSet;
 use day1::quicksort;
 
 fn main() {
@@ -16,7 +17,28 @@ fn main() {
 }
 
 fn find_similarity_score(list_1: &Vec<u32>, list_2: &Vec<u32>) -> u32 {
-    
+    let mut seen = HashSet::<u32>::new();
+    let mut similarity_score = 0;
+
+    for &item in list_1.iter() {
+        if seen.contains(&item) {
+            continue;
+        }
+
+        seen.insert(item);
+
+        let mut occurance_count = 0;
+
+        for &second_item in list_2.iter() {
+            if second_item == item {
+                occurance_count += 1;
+            }
+        }
+
+        similarity_score = item * occurance_count;
+    }
+
+    similarity_score
 }
 
 fn find_solution_part1(mut list_1: &mut Vec<u32>, mut list_2: &mut Vec<u32>) -> u32 {
