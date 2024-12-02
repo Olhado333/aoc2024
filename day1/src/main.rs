@@ -3,10 +3,22 @@ use std::fs;
 fn main() {
     let puzzle_input = fs::read_to_string("src/puzzle_input.txt").expect("Failed to read puzzle_input.txt");
 
-    let lines = puzzle_input.lines().collect::<Vec<_>>();
-    
+    let (list_1, list_2) = divide_input(&puzzle_input);
+
+    if list_1.len() != list_2.len() {
+        panic!("Lists are not of equal length.");
+    }
+
+    for i in 0..list_1.len() {
+        println!("At {}\nlist_1: {}, list_2: {}.", i, list_1[i], list_2[i]);
+    }
+}
+
+fn divide_input(puzzle_input: &String) -> (Vec<&str>, Vec<&str>) {
     let mut list_1 = Vec::<&str>::new();
     let mut list_2 = Vec::<&str>::new();
+
+    let lines = puzzle_input.lines().collect::<Vec<_>>();
 
     lines.into_iter().for_each(|line| {
         let mut line_split = line.split("   ");
@@ -24,11 +36,5 @@ fn main() {
         }
     });
 
-    if list_1.len() != list_2.len() {
-        panic!("Lists are not of equal length.");
-    }
-
-    for i in 0..list_1.len() {
-        println!("At {}\nlist_1: {}, list_2: {}.", i, list_1[i], list_2[i]);
-    }
+    (list_1, list_2)
 }
