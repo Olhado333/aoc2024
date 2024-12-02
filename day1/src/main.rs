@@ -14,7 +14,7 @@ fn main() {
     }
 }
 
-fn divide_input(puzzle_input: &String) -> (Vec<&str>, Vec<&str>) {
+fn divide_input(puzzle_input: &String) -> (Vec<u32>, Vec<u32>) {
     let mut list_1 = Vec::<&str>::new();
     let mut list_2 = Vec::<&str>::new();
 
@@ -35,6 +35,18 @@ fn divide_input(puzzle_input: &String) -> (Vec<&str>, Vec<&str>) {
             panic!("Failed to obtain second half of line.");
         }
     });
+
+    let list_1 = list_1.into_iter()
+        .map(|item| {
+            item.parse::<u32>().expect("Failed to parse &str to u32 in list_1")
+        })
+        .collect::<Vec<_>>();
+
+    let list_2 = list_2.into_iter()
+        .map(|item| {
+            item.parse::<u32>().expect("Failed to parse &str into u32 in list_2")
+        })
+        .collect::<Vec<_>>();
 
     (list_1, list_2)
 }
