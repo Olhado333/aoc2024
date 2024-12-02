@@ -11,9 +11,9 @@ fn main() {
         panic!("Lists are not of equal length.");
     }
 
-    let difference_sum = find_solution_part1(&mut list_1, &mut list_2);
+    let similarity_score = find_similarity_score(&list_1, &list_2);
 
-    println!("The sum of the differences between each list item is {difference_sum}");
+    println!("The similarity score of the two lists is: {similarity_score}");
 }
 
 fn find_similarity_score(list_1: &Vec<u32>, list_2: &Vec<u32>) -> u32 {
@@ -35,7 +35,7 @@ fn find_similarity_score(list_1: &Vec<u32>, list_2: &Vec<u32>) -> u32 {
             }
         }
 
-        similarity_score = item * occurance_count;
+        similarity_score += item * occurance_count;
     }
 
     similarity_score
