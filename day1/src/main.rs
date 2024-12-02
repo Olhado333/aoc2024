@@ -1,16 +1,20 @@
 use std::fs;
+use day1::quicksort;
 
 fn main() {
     let puzzle_input = fs::read_to_string("src/puzzle_input.txt").expect("Failed to read puzzle_input.txt");
 
-    let (list_1, list_2) = divide_input(&puzzle_input);
+    let (mut list_1, mut list_2) = divide_input(&puzzle_input);
+
+    quicksort(&mut list_1);
+    quicksort(&mut list_2);
 
     if list_1.len() != list_2.len() {
         panic!("Lists are not of equal length.");
     }
 
     for i in 0..list_1.len() {
-        println!("At {}\nlist_1: {}, list_2: {}.", i, list_1[i], list_2[i]);
+        println!("At {}: list_1: {}, list_2: {}.", i, list_1[i], list_2[i]);
     }
 }
 

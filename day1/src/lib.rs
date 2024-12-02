@@ -39,6 +39,7 @@ mod tests {
         assert_eq!(arr_1, expected);
     }
 
+    #[test]
     fn sort_array_2() {
         let mut arr_2 = vec![3, 5, 2, 4, 1];
         let expected = vec![1, 2, 3, 4, 5];
