@@ -6,12 +6,18 @@ fn main() {
 
     let (mut list_1, mut list_2) = divide_input(&puzzle_input);
 
-    quicksort(&mut list_1);
-    quicksort(&mut list_2);
-
     if list_1.len() != list_2.len() {
         panic!("Lists are not of equal length.");
     }
+
+    let difference_sum = find_solution_part1(&mut list_1, &mut list_2);
+
+    println!("The sum of the differences between each list item is {difference_sum}");
+}
+
+fn find_solution_part1(mut list_1: &mut Vec<u32>, mut list_2: &mut Vec<u32>) -> u32 {
+    quicksort(&mut list_1);
+    quicksort(&mut list_2);
 
     let mut difference_sum = 0;
 
@@ -20,7 +26,7 @@ fn main() {
         difference_sum += diff;
     }
 
-    println!("The sum of the differences between each list item is {difference_sum}");
+    difference_sum
 }
 
 fn divide_input(puzzle_input: &String) -> (Vec<u32>, Vec<u32>) {
