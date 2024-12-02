@@ -15,6 +15,10 @@ fn main() {
     println!("The sum of the differences between each list item is {difference_sum}");
 }
 
+fn find_similarity_score(list_1: &Vec<u32>, list_2: &Vec<u32>) -> u32 {
+    
+}
+
 fn find_solution_part1(mut list_1: &mut Vec<u32>, mut list_2: &mut Vec<u32>) -> u32 {
     quicksort(&mut list_1);
     quicksort(&mut list_2);
