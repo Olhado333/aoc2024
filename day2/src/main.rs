@@ -1,13 +1,40 @@
 use std::fs;
 
 fn main() {
-    let puzzle_input = fs::read_to_string("src/puzzle_input.txt").expect("Failed to read puzzle input.");
+    let puzzle_input =
+        fs::read_to_string("src/puzzle_input.txt").expect("Failed to read puzzle input.");
 
     let reports = parse_input(&puzzle_input);
 
-    for report in reports {
-        println!("{report:?}");
+    let test = find_safety(&reports[0]);
+    println!("{test}");
+}
+
+fn find_safety(report: &Vec<i32>) -> bool {
+    if report.len() < 2 {
+        return true;
     }
+
+    let mut first = 0;
+    let mut second = 1;
+    let increasing = report[first] < report[second];
+
+    for _ in 0..report.len() {
+        if (report[first] < report[second]) != increasing {
+            return false;
+        }
+
+        let difference = report[first].abs_diff(report[second]);
+
+        if (difference < 1) || (difference > 3) {
+            return false;
+        }
+
+        first += 1;
+        second += 1;
+    }
+
+    true
 }
 
 fn parse_input(puzzle_input: &str) -> Vec<Vec<i32>> {
@@ -17,10 +44,8 @@ fn parse_input(puzzle_input: &str) -> Vec<Vec<i32>> {
         .into_iter()
         .map(|line| {
             line.split(" ")
-                .map(|num|
-                    num.parse::<i32>()
-                    .expect("Failed to convert &str to i32."))
-                    .collect::<Vec<_>>()
+                .map(|num| num.parse::<i32>().expect("Failed to convert &str to i32."))
+                .collect::<Vec<_>>()
         })
         .collect::<Vec<Vec<_>>>()
 }
