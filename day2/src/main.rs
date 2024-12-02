@@ -30,7 +30,7 @@ fn find_safety(report: &Vec<i32>) -> bool {
     let mut second = 1;
     let increasing = report[first] < report[second];
 
-    for _ in 0..report.len() {
+    for _ in 0..(report.len() - 1) {
         if (report[first] < report[second]) != increasing {
             return false;
         }
