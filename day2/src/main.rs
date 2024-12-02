@@ -6,8 +6,19 @@ fn main() {
 
     let reports = parse_input(&puzzle_input);
 
-    let test = find_safety(&reports[0]);
-    println!("{test}");
+    println!("The number of safe reports is: {}", num_safe_reports(&reports));
+}
+
+fn num_safe_reports(reports: &Vec<Vec<i32>>) -> u32 {
+    let mut count = 0;
+
+    for report in reports {
+        if find_safety(report) {
+            count += 1;
+        }
+    }
+
+    count
 }
 
 fn find_safety(report: &Vec<i32>) -> bool {
