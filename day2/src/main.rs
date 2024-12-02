@@ -21,28 +21,56 @@ fn num_safe_reports(reports: &Vec<Vec<i32>>) -> u32 {
     count
 }
 
+fn problem_dampener(mut report: Vec<i32>) -> Vec<i32> {
+    let mut first_pointer = 0;
+    let mut second_pointer = 1;
+
+    let increasing = report[first_pointer] < report[second_pointer];
+
+    for _ in 0..(report.len() - 1) {
+        if (report[first_pointer] < report[second_pointer]) != increasing {
+            report.remove(second_pointer);
+            break;
+        }
+
+        let difference = report[first_pointer].abs_diff(report[second_pointer]);
+
+        if (difference < 1) || (difference > 3) {
+            report.remove(second_pointer);
+            break;
+        }
+
+        first_pointer += 1;
+        second_pointer += 1;
+    }
+
+    report
+}
+
 fn find_safety(report: &Vec<i32>) -> bool {
+    let mut report = problem_dampener(report.clone());
+
     if report.len() < 2 {
         return true;
     }
 
-    let mut first = 0;
-    let mut second = 1;
-    let increasing = report[first] < report[second];
+    let mut first_pointer = 0;
+    let mut second_pointer = 1;
+    let increasing = report[first_pointer] < report[second_pointer];
 
     for _ in 0..(report.len() - 1) {
-        if (report[first] < report[second]) != increasing {
+        if (report[first_pointer] < report[second_pointer]) != increasing {
             return false;
         }
 
-        let difference = report[first].abs_diff(report[second]);
+        let difference = report[first_pointer].abs_diff(report[second_pointer]);
 
         if (difference < 1) || (difference > 3) {
             return false;
         }
 
-        first += 1;
-        second += 1;
+        first_pointer += 1;
+        second_pointer += 1;
     }
 
     true
