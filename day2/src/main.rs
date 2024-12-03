@@ -7,16 +7,14 @@ fn main() {
     let reports = parse_input(&puzzle_input);
 
     println!("The number of safe reports is: {}", num_safe_reports(&reports));
+
 }
 
 fn num_safe_reports(reports: &Vec<Vec<i32>>) -> u32 {
     let mut count = 0;
-    let mut balls = 0;
 
     for report in reports {
-        println!("\n{balls}:");
-        balls += 1;
-        if is_report_safe(report) {
+        if is_report_safe_varients(report) {
             count += 1;
         }
     }
@@ -24,14 +22,24 @@ fn num_safe_reports(reports: &Vec<Vec<i32>>) -> u32 {
     count
 }
 
+fn is_report_safe_varients(report: &Vec<i32>) -> bool {
+    for i in 0..report.len() {
+        let mut varient = report.clone();
+        varient.remove(i);
+
+        if is_report_safe(&varient) {
+            return true;
+        }
+    }
+
+    false
+}
+
 fn is_report_safe(report: &Vec<i32>) -> bool {
     let mut is_increasing = report[0] < report[1];
-    let mut problem_dampener = true;
 
     let mut first_pointer = 0;
     let mut second_pointer = 1;
-
-    println!("{report:?}");
 
     for _ in 0..(report.len() - 1) {
         let first = report[first_pointer];
@@ -39,11 +47,7 @@ fn is_report_safe(report: &Vec<i32>) -> bool {
         let current_is_increasing = first < second;
 
         if current_is_increasing != is_increasing {
-            if !problem_dampener { return false; }
-            problem_dampener = false;
-
-            second_pointer += 1;
-            continue
+            return false;
         } else {
             is_increasing = current_is_increasing;
         }
@@ -51,16 +55,8 @@ fn is_report_safe(report: &Vec<i32>) -> bool {
         let difference = first.abs_diff(second);
 
         if (difference < 1) || (difference > 3) {
-            if !problem_dampener { return false; }
-            problem_dampener = false;
-
-            second_pointer += 1;
-            continue;
+            return false;
         }
-
-        println!("first: {}, second: {}", first, second);
-
-        println!("{problem_dampener}");
 
         first_pointer = second_pointer;
         second_pointer += 1;
