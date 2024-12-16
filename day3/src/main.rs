@@ -2,7 +2,7 @@ use std::fs;
 use regex::Regex;
 
 fn main() {
-    let puzzle_input = fs::read_to_string("src/small_puzzle_input.txt").unwrap();
+    let puzzle_input = fs::read_to_string("src/puzzle_input.txt").unwrap();
     
     let answer = part_one(&puzzle_input);
     println!("{answer}");
