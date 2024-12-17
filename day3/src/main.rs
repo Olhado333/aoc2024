@@ -1,9 +1,9 @@
-use std::fs;
 use regex::Regex;
+use std::fs;
 
 fn main() {
     let puzzle_input = fs::read_to_string("src/puzzle_input.txt").unwrap();
-    
+
     let answer = part_two(&puzzle_input);
     println!("{answer}");
 }
@@ -18,7 +18,7 @@ fn part_one(puzzle_input: &str) -> u32 {
 
         sum += num1 * num2;
     }
-    
+
     sum
 }
 
@@ -59,7 +59,7 @@ fn get_multipliers(puzzle_input: &str) -> Vec<(u32, u32, usize)> {
     let mut output: Vec<(u32, u32, usize)> = Vec::new();
 
     for found in pattern.captures_iter(puzzle_input) {
-        let mut template = (0,0,0);
+        let mut template = (0, 0, 0);
 
         if let Some(m) = found.name("first") {
             template.0 = m.as_str().parse().unwrap();
